@@ -719,7 +719,7 @@ static void print_sep(void)
 /* Print a backtrace if supported by libc */
 static void print_backtrace()
 {
-#if HAVE_BACKTRACE
+#if HAVE_BACKTRACE && HAVE_EXECINFO_H
     void* backtracebuffer[BACKTRACELEN];
     int btsize = backtrace(backtracebuffer, BACKTRACELEN);
     if (btsize)
