@@ -15,6 +15,7 @@ is_windows = host_machine.system() == 'windows'
 is_cygwin = host_machine.system() == 'cygwin'
 is_msvc = cc.get_id() == 'msvc'
 is_mingw = cc.get_id()=='gcc' and host_machine.system()=='windows'
+is_emscripten = host_machine.system() == 'emscripten'
 
 # Set preprocessor macros
 # Disable .c line numbers in exception tracebacks
@@ -94,7 +95,7 @@ config.set('CYSIGNALS_STD_ATOMIC', cxx.links('#include <atomic>\nint main() { st
 # for std::atomic with OpenMP in C++ code
 config.set('CYSIGNALS_STD_ATOMIC_WITH_OPENMP', cxx.links('#include <atomic>\nint main() { static std::atomic<int> x; return 0; }', args: ['-fopenmp']) ? 1 : 0)
 
-if is_windows
+if is_windows or is_emscripten
   threads_dep = []
 else
   threads_dep = dependency('threads')
